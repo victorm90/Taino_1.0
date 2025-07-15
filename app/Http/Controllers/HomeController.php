@@ -8,7 +8,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $titulo = 'Dashboard | Taino';
-        return view('home.index');
+        $titulo = 'Asentamiento Taíno | Patrimonio Cultural';
+        return view('home.index', compact('titulo'));
     }
 }
