@@ -11,7 +11,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('admin/images/favicon.ico') }}">
+    {{-- <link rel="shortcut icon" href=""> --}}
     <!-- Layout config Js -->
     <script src="{{ asset('admin/js/layout.js') }}"></script>
     <!-- Icons CSS -->
@@ -59,7 +59,7 @@
     @include('dashboard.partials.sidebar2')
 
     <script src='{{ asset('admin/libs/choices.js/public/assets/scripts/choices.min.js') }}'></script>
-    <script src="{{ asset('admin/libs/%40popperjs/core/umd/popper.min.js') }}"></script>
+    {{-- <script src="{{ asset('admin/libs/%40popperjs/core/umd/popper.min.js') }}"></script> --}}
     <script src="{{ asset('admin/libs/tippy.js/tippy-bundle.umd.min.js') }}"></script>
     <script src="{{ asset('admin/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('admin/libs/prismjs/prism.js') }}"></script>
