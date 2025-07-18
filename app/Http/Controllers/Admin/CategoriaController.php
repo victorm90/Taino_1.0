@@ -11,19 +11,19 @@ use Illuminate\Validation\Rule;
 
 class CategoriaController extends Controller
 {
-   public function index(Request $request)
+    public function index(Request $request)
     {
         $titulo = 'Categorías | Nacion Taino';
 
         $query = Categoria::withCount('productos')->latest();
-        
+
         // Búsqueda mejorada con filtros
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'ILIKE', "%{$search}%")
-                  ->orWhere('slug', 'ILIKE', "%{$search}%")
-                  ->orWhere('descripcion', 'ILIKE', "%{$search}%");
+                    ->orWhere('slug', 'ILIKE', "%{$search}%")
+                    ->orWhere('descripcion', 'ILIKE', "%{$search}%");
             });
         }
 
@@ -53,7 +53,7 @@ class CategoriaController extends Controller
             DB::commit();
 
             return redirect()->route('admin.categoria')->with([
-                'success' => 'Categoría creada: ' . $categoria->name,
+                'create' => 'Categoría creada: ' . $categoria->name,
                 'scroll_to' => 'categoria-' . $categoria->id
             ]);
         } catch (\Exception $e) {
@@ -93,7 +93,7 @@ class CategoriaController extends Controller
             DB::commit();
 
             return redirect()->route('admin.categoria')->with([
-                'success' => 'Categoría actualizada: ' . $categoria->name,
+                'edit' => 'Categoría actualizada: ' . $categoria->name,
                 'scroll_to' => 'categoria-' . $categoria->id
             ]);
         } catch (\Exception $e) {
@@ -115,7 +115,7 @@ class CategoriaController extends Controller
             $categoria->delete();
 
             return redirect()->route('admin.categoria')->with([
-                'success' => 'Categoría eliminada: ' . $nombreCategoria,
+                'delete' => 'Categoría eliminada: ' . $nombreCategoria,
                 'scroll_to' => 'categoria-' . $categoria->id
             ]);
         } catch (\Exception $e) {

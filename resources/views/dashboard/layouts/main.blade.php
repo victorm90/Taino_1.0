@@ -134,6 +134,19 @@
             height: 18px;
         }
 
+        .alert-create {
+    border-left-color: #10b981; /* Verde */
+    background-color: #f0fdf4;
+}
+.alert-edit {
+    border-left-color: #3b82f6; /* Azul */
+    background-color: #eff6ff;
+}
+.alert-delete {
+    border-left-color: #ef4444; /* Rojo */
+    background-color: #fef2f2;
+}
+
         @keyframes slideIn {
             to {
                 transform: translateX(0);
@@ -205,7 +218,7 @@
     @include('dashboard.partials.sidebar2')
 
     <script src='{{ asset('admin/libs/choices.js/public/assets/scripts/choices.min.js') }}'></script>
-    {{-- <script src="{{ asset('admin/libs/%40popperjs/core/umd/popper.min.js') }}"></script> --}}
+    <script src="{{ asset('admin/libs/%40popperjs/core/umd/popper.min.js') }}"></script>
     <script src="{{ asset('admin/libs/tippy.js/tippy-bundle.umd.min.js') }}"></script>
     <script src="{{ asset('admin/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('admin/libs/prismjs/prism.js') }}"></script>
@@ -247,7 +260,16 @@
             </svg>`,
             custom: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11 7H13M11 11H13M11 15H13M5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3Z" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>`
+            </svg>`,
+            create: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 4V20M4 12H20" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`,
+    edit: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 4H4C3.44772 4 3 4.44772 3 5V20C3 20.5523 3.44772 21 4 21H19C19.5523 21 20 20.5523 20 20V13M11 4L17 10M11 4V10H17M17 10L21 14" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`,
+    delete: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 7H19M10 11V17M14 11V17M4 7H20M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7H15ZM6 7H18V20C18 20.5523 17.5523 21 17 21H7C6.44772 21 6 20.5523 6 20V7Z" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`
         };
 
         // Función mejorada para mostrar alertas
@@ -313,6 +335,18 @@
             // Mensajes flash de Laravel
             @if (Session::has('success'))
                 showAlert('success', 'Éxito', `{{ Session::get('success') }}`);
+            @endif
+
+            @if (Session::has('create'))
+                showAlert('create', 'Creado', `{{ Session::get('create') }}`);
+            @endif
+
+            @if (Session::has('edit'))
+                showAlert('edit', 'Editado', `{{ Session::get('edit') }}`);
+            @endif
+
+            @if (Session::has('delete'))
+                showAlert('delete', 'Eliminado', `{{ Session::get('delete') }}`);
             @endif
 
             @if (Session::has('error'))

@@ -39,9 +39,8 @@
                     </div>
 
                     <div class="ltr:md:text-end rtl:md:text-start">
-                        <button data-modal-target="categoriaModal" type="button"
-                            class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
-                            <i class="align-bottom ri-add-line me-1"></i> Nueva Categoría
+                        <button type="button" onclick="openEditCategoriaModal()" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                             <i class="align-bottom ri-add-line me-1"></i> Nueva Categoría
                         </button>
                     </div>
                 </div>
@@ -113,7 +112,7 @@
                                                 <i data-lucide="pencil" class="size-4"></i>
                                             </a>
                                             <button
-                                                 onclick="openDeleteModal({{ $categoria->id }}, '{{ $categoria->name }}', '{{ $categoria->slug }}')"
+                                                onclick="openDeleteModal({{ $categoria->id }}, '{{ $categoria->name }}', '{{ $categoria->slug }}')"
                                                 class="flex items-center justify-center size-8 transition-all duration-200 ease-linear rounded-md bg-slate-100 dark:bg-zink-600 text-slate-500 dark:text-zink-200 hover:text-red-500 dark:hover:text-red-500 hover:bg-slate-200 dark:hover:bg-zink-500"
                                                 data-tooltip="Eliminar">
                                                 <i data-lucide="trash-2" class="size-4"></i>
@@ -183,6 +182,16 @@
                     <form id="categoriaForm" method="POST">
                         @csrf
                         <input type="hidden" name="id" id="id-field">
+                        <!-- Mostrar errores generales -->
+        @if($errors->any())
+            <div class="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-md">
+                <ul class="list-disc pl-5">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
                         <div class="mb-3">
                             <label for="name-field" class="inline-block mb-2 text-base font-medium">Nombre <span
                                     class="text-red-500">*</span></label>
@@ -316,45 +325,68 @@
             }
         }
 
-        function openEditCategoriaModal(editData) {
-            const form = document.getElementById('categoriaForm');
-            const slugField = document.getElementById('slug-field');
-            
-            // Resetear el formulario
-            form.reset();
-            
-            if (editData) {
-                document.getElementById('modalTitle').textContent = 'Editar Categoría';
-                document.getElementById('id-field').value = editData.id;
-                document.getElementById('name-field').value = editData.name;
-                slugField.value = editData.slug;
-                document.getElementById('descripcion-field').value = editData.descripcion || '';
-                
-                // Actualizar método a PUT
-                let methodInput = form.querySelector('input[name="_method"]');
-                if (methodInput) methodInput.value = 'PUT';
-                else {
-                    methodInput = document.createElement('input');
-                    methodInput.type = 'hidden';
-                    methodInput.name = '_method';
-                    methodInput.value = 'PUT';
-                    form.appendChild(methodInput);
-                }
+        function openEditCategoriaModal(editData = null) {
+    const form = document.getElementById('categoriaForm');
+    const slugField = document.getElementById('slug-field');
+    
+    form.reset();
+    
+    // Restablecer método a POST
+    let methodInput = form.querySelector('input[name="_method"]');
+    if (methodInput) methodInput.remove();
+    
+    if (editData) {
+        document.getElementById('modalTitle').textContent = 'Editar Categoría';
+        document.getElementById('id-field').value = editData.id;
+        document.getElementById('name-field').value = editData.name;
+        slugField.value = editData.slug;
+        document.getElementById('descripcion-field').value = editData.descripcion || '';
+        
+        // Actualizar método a PUT
+        methodInput = document.createElement('input');
+        methodInput.type = 'hidden';
+        methodInput.name = '_method';
+        methodInput.value = 'PUT';
+        form.appendChild(methodInput);
 
-                form.action = "{{ route('admin.categoria.update', ['categoria' => 'slug']) }}".replace('slug', editData.slug);
-            } else {
-                document.getElementById('modalTitle').textContent = 'Nueva Categoría';
-                document.getElementById('id-field').value = '';
-                slugField.value = '';
-                slugField.readOnly = true;
+        form.action = "{{ route('admin.categoria.update', ['categoria' => 'slug']) }}".replace('slug', editData.slug);
+    } else {
+        document.getElementById('modalTitle').textContent = 'Nueva Categoría';
+        document.getElementById('id-field').value = '';
+        slugField.value = '';
+        form.action = "{{ route('admin.categoria.store') }}";
+    }
 
-                const methodInput = form.querySelector('input[name="_method"]');
-                if (methodInput) methodInput.remove();
-                form.action = "{{ route('admin.categoria.store') }}";
-            }
+    toggleCategoriaModal(true);
+}
 
-            toggleCategoriaModal(true);
-        }
+// Asegurar que el slug se genere correctamente
+document.addEventListener('DOMContentLoaded', function() {
+    const nameField = document.getElementById('name-field');
+    if (nameField) {
+        nameField.addEventListener('input', function() {
+            updateSlugField();
+        });
+    }
+    
+    // Inicializar el modal si hay errores de validación
+    @if($errors->any())
+        setTimeout(() => {
+            openEditCategoriaModal();
+            @if(old('id'))
+                const editData = {
+                    id: "{{ old('id') }}",
+                    name: "{{ old('name') }}",
+                    slug: "{{ old('slug') }}",
+                    descripcion: "{{ old('descripcion') }}"
+                };
+                openEditCategoriaModal(editData);
+            @else
+                openEditCategoriaModal();
+            @endif
+        }, 300);
+    @endif
+});
 
         // ================ Funciones para el Modal de Eliminación ================
         function toggleDeleteModal(show) {
