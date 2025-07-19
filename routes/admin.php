@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\Admin\CategoriaController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('/categoria')->group(function () {
     Route::get('/', [CategoriaController::class, 'index'])->name('admin.categoria');

@@ -11,7 +11,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
-    {{-- <link rel="shortcut icon" href=""> --}}
+    <link rel="shortcut icon" href="{{ asset('admin/images/CSB.png') }}">
     <!-- Layout config Js -->
     <script src="{{ asset('admin/js/layout.js') }}"></script>
     <!-- Icons CSS -->
