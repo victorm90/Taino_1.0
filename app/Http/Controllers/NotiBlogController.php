@@ -8,7 +8,7 @@ class NotiBlogController extends Controller
 {
     public function index()
     {
-        $titulo = 'Dashboard | Taino';
+        $titulo = 'Nación Taíno de boriken';
         return view('home.blog');
     }
 }

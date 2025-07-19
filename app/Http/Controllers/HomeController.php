@@ -8,7 +8,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $titulo = 'Asentamiento Taíno | Patrimonio Cultural';
+        $titulo = 'Nación Taíno de boriken';
         return view('home.index', compact('titulo'));
     }
 }

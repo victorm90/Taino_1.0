@@ -135,17 +135,22 @@
         }
 
         .alert-create {
-    border-left-color: #10b981; /* Verde */
-    background-color: #f0fdf4;
-}
-.alert-edit {
-    border-left-color: #3b82f6; /* Azul */
-    background-color: #eff6ff;
-}
-.alert-delete {
-    border-left-color: #ef4444; /* Rojo */
-    background-color: #fef2f2;
-}
+            border-left-color: #10b981;
+            /* Verde */
+            background-color: #f0fdf4;
+        }
+
+        .alert-edit {
+            border-left-color: #3b82f6;
+            /* Azul */
+            background-color: #eff6ff;
+        }
+
+        .alert-delete {
+            border-left-color: #ef4444;
+            /* Rojo */
+            background-color: #fef2f2;
+        }
 
         @keyframes slideIn {
             to {
@@ -181,9 +186,9 @@
 
 <body
     class="text-base bg-body-bg text-body font-public dark:text-zink-100 dark:bg-zink-800 group-data-[skin=bordered]:bg-body-bordered group-data-[skin=bordered]:dark:bg-zink-700">
-    
+
     <div id="alerts-container"></div>
-    
+
     <div class="group-data-[sidebar-size=sm]:min-h-sm group-data-[sidebar-size=sm]:relative">
 
         {{-- Menu Sidebar --}}
@@ -264,10 +269,10 @@
             create: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 4V20M4 12H20" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>`,
-    edit: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            edit: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M11 4H4C3.44772 4 3 4.44772 3 5V20C3 20.5523 3.44772 21 4 21H19C19.5523 21 20 20.5523 20 20V13M11 4L17 10M11 4V10H17M17 10L21 14" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>`,
-    delete: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            delete: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M5 7H19M10 11V17M14 11V17M4 7H20M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7H15ZM6 7H18V20C18 20.5523 17.5523 21 17 21H7C6.44772 21 6 20.5523 6 20V7Z" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>`
         };
